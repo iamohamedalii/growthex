@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrowthEx — Strategy + Content = Sales</title>
+<meta name="description" content="GrowthEx تكتب السكريبت وتمنتج الكرياتيف اللي تبيع لبراندات الـ e-commerce. Strategy + Content = Sales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#150019;
+    --bg:#1D0027;
+    --surface:#280A38;
+    --surface-2:#331246;
+    --line: rgba(255,255,255,0.09);
+    --teal-deep:#0B3A52;
+    --teal:#0C6E78;
+    --teal-bright:#00B6B4;
+    --teal-glow:#3CEFE0;
+    --white:#F6F3F9;
+    --muted:#B9A6C9;
+    --muted-2:#8B7699;
+    --danger:#FF6B6B;
+    --grad-brand: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal) 45%, var(--teal-bright) 75%, var(--teal-glow) 100%);
+    --radius-tab: 28px 28px 28px 96px;
+    --radius-tab-flip: 28px 96px 28px 28px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -5%, rgba(0,182,180,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at -10% 40%, rgba(60,239,224,0.08), transparent 55%),
+      var(--bg);
+    color:var(--white);
+    font-family:'Cairo','Inter',sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  .lat{ font-family:'Space Grotesk','Inter',sans-serif; direction:ltr; unicode-bidi: isolate; }
+  h1,h2,h3,.brand{ font-family:'Cairo','Space Grotesk',sans-serif; font-weight:800; letter-spacing:-0.01em; }
+  .wrap{ max-width:1160px; margin:0 auto; padding:0 24px; }
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(14px);
+    background: rgba(21,0,25,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1160px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-size:1.25rem; }
+  .brand svg{ width:34px; height:34px; }
+  .brand-name{ font-family:'Space Grotesk',sans-serif; direction:ltr; }
+  .navlinks{ display:flex; align-items:center; gap:32px; }
+  .navlinks a{ font-size:0.95rem; color:var(--muted); transition:color .2s; position:relative;}
+  .navlinks a:hover{ color:var(--white); }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:13px 26px; border-radius:14px; font-weight:700; font-size:0.95rem;
+    cursor:pointer; border:none; transition:transform .18s ease, box-shadow .18s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background: linear-gradient(120deg, var(--teal) 0%, var(--teal-bright) 55%, var(--teal-glow) 100%);
+    color:#04201F;
+    box-shadow: 0 8px 28px -8px rgba(0,182,180,0.55);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 32px -6px rgba(0,182,180,0.7); }
+  .btn-ghost{
+    background:transparent; color:var(--white); border:1px solid var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--teal-bright); color:var(--teal-glow); }
+  .nav-cta{ display:none; }
+  @media(min-width:860px){ .nav-cta{ display:inline-flex; } }
+  .navlinks{ display:none; }
+  @media(min-width:860px){ .navlinks{ display:flex; } }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding:96px 0; position:relative; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:0.82rem; font-weight:700; color:var(--teal-glow);
+    letter-spacing:0.04em; margin-bottom:18px;
+  }
+  .eyebrow::before{ content:""; width:26px; height:2px; background:var(--teal-bright); border-radius:2px; }
+  h2{ font-size:clamp(1.7rem, 3.4vw, 2.6rem); margin-bottom:18px; max-width:780px; }
+  .lead{ color:var(--muted); font-size:1.08rem; max-width:640px; margin-bottom:44px; }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:88px 0 60px; }
+  .hero-grid{ display:grid; grid-template-columns:1fr; gap:56px; align-items:center; }
+  @media(min-width:960px){ .hero-grid{ grid-template-columns:1.05fr 0.95fr; } }
+  .hero-tag{
+    display:inline-flex; align-items:center; gap:10px; padding:8px 16px;
+    border:1px solid var(--line); border-radius:999px; font-size:0.85rem; color:var(--muted);
+    margin-bottom:26px; background:rgba(255,255,255,0.02);
+  }
+  .hero-tag .dot{ width:7px; height:7px; border-radius:50%; background:var(--teal-glow); box-shadow:0 0 10px var(--teal-glow); }
+  h1{ font-size:clamp(2.1rem, 5vw, 3.4rem); line-height:1.35; margin-bottom:24px; }
+  h1 .hl{
+    background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{ margin-bottom:36px; }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:40px; }
+  .hero-stats{ display:flex; gap:36px; flex-wrap:wrap; }
+  .hero-stats div{ display:flex; flex-direction:column; }
+  .hero-stats .num{ font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; color:var(--white); direction:ltr; }
+  .hero-stats .lbl{ font-size:0.85rem; color:var(--muted-2); }
+
+  /* hero visual - brand mark */
+  .hero-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+  .mark-plate{
+    position:relative; width:min(420px, 88vw); aspect-ratio:1/1;
+    border-radius:36px; background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+  }
+  .mark-plate svg{ width:58%; height:58%; filter:drop-shadow(0 0 32px rgba(0,182,180,0.35)); animation: float 6s ease-in-out infinite; }
+  @keyframes float{ 0%,100%{ transform:translateY(0px);} 50%{ transform:translateY(-10px);} }
+  .orbit-chip{
+    position:absolute; display:flex; align-items:center; gap:8px;
+    background:rgba(21,0,25,0.85); border:1px solid var(--line); backdrop-filter:blur(10px);
+    padding:10px 16px; border-radius:14px; font-size:0.82rem; font-weight:600;
+    box-shadow:0 12px 28px -10px rgba(0,0,0,0.5);
+  }
+  .orbit-chip svg{ width:16px; height:16px; color:var(--teal-glow); }
+  .chip-1{ top:6%; right:-4%; animation: bob 5s ease-in-out infinite; }
+  .chip-2{ bottom:10%; left:-6%; animation: bob 5.5s ease-in-out infinite .6s; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
+
+  /* ---------- PROBLEM ---------- */
+  .problem-grid{ display:grid; grid-template-columns:1fr; gap:18px; }
+  @media(min-width:720px){ .problem-grid{ grid-template-columns:1fr 1fr; } }
+  .problem-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-tab);
+    padding:28px 30px; display:flex; gap:16px; align-items:flex-start;
+  }
+  .problem-card .ico{
+    flex:none; width:44px; height:44px; border-radius:12px;
+    background:rgba(255,107,107,0.1); display:flex; align-items:center; justify-content:center;
+  }
+  .problem-card .ico svg{ width:22px; height:22px; color:var(--danger); }
+  .problem-card h3{ font-size:1.05rem; margin-bottom:6px; font-weight:700; }
+  .problem-card p{ color:var(--muted); font-size:0.95rem; }
+  .problem-note{
+    margin-top:32px; padding:20px 26px; border-radius:var(--radius-tab-flip);
+    background:linear-gradient(120deg, rgba(0,182,180,0.09), rgba(60,239,224,0.03));
+    border:1px solid rgba(0,182,180,0.25); color:var(--white); font-weight:600; max-width:720px;
+  }
+
+  /* ---------- SOLUTION ---------- */
+  .solution-wrap{ display:grid; grid-template-columns:1fr; gap:48px; align-items:center; }
+  @media(min-width:960px){ .solution-wrap{ grid-template-columns:1fr 1fr; } }
+  .equation{
+    display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
+    background:var(--surface); border:1px solid var(--line); border-radius:24px;
+    padding:26px; margin-bottom:34px;
+  }
+  .equation .pill{
+    padding:10px 18px; border-radius:12px; background:var(--surface-2); font-weight:700; font-size:0.95rem;
+  }
+  .equation .op{ color:var(--teal-glow); font-family:'Space Grotesk',sans-serif; font-size:1.3rem; font-weight:700; }
+  .equation .result{
+    background:var(--grad-brand); color:#04201F; padding:10px 20px; border-radius:12px; font-weight:800;
+  }
+  .value-list{ display:flex; flex-direction:column; gap:16px; }
+  .value-item{ display:flex; gap:14px; align-items:flex-start; }
+  .value-item .check{
+    flex:none; width:26px; height:26px; border-radius:8px; margin-top:2px;
+    background:rgba(0,182,180,0.14); display:flex; align-items:center; justify-content:center;
+  }
+  .value-item .check svg{ width:14px; height:14px; color:var(--teal-glow); }
+  .value-item p{ color:var(--muted); font-size:0.98rem; }
+  .value-item strong{ color:var(--white); }
+
+  .solution-visual{
+    border-radius:var(--radius-tab); border:1px solid var(--line);
+    background:linear-gradient(160deg, var(--surface), var(--void));
+    padding:30px; position:relative; overflow:hidden;
+  }
+  .solution-visual .bars{ display:flex; align-items:flex-end; gap:10px; height:180px; margin-bottom:20px; }
+  .solution-visual .bar{ flex:1; border-radius:8px 8px 0 0; background:var(--surface-2); }
+  .solution-visual .bar.hl{ background:var(--grad-brand); }
+  .solution-visual .caption{ display:flex; justify-content:space-between; color:var(--muted-2); font-size:0.82rem; }
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{ display:grid; grid-template-columns:1fr; gap:20px; }
+  @media(min-width:720px){ .services-grid{ grid-template-columns:repeat(2,1fr); } }
+  .service-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-tab-flip);
+    padding:32px; transition:border-color .2s, transform .2s;
+  }
+  .service-card:hover{ border-color:rgba(0,182,180,0.4); transform:translateY(-4px); }
+  .service-card .ico{
+    width:52px; height:52px; border-radius:14px; margin-bottom:20px;
+    background:var(--grad-brand); display:flex; align-items:center; justify-content:center;
+  }
+  .service-card .ico svg{ width:26px; height:26px; color:#04201F; }
+  .service-card h3{ font-size:1.15rem; margin-bottom:10px; }
+  .service-card p{ color:var(--muted); font-size:0.95rem; }
+
+  /* ---------- PROCESS ---------- */
+  .process-list{ display:grid; grid-template-columns:1fr; gap:0; counter-reset:step; }
+  @media(min-width:860px){ .process-list{ grid-template-columns:repeat(4,1fr); gap:20px; } }
+  .step{
+    position:relative; padding:28px 24px 24px; border:1px solid var(--line); border-radius:20px;
+    background:var(--surface); margin-bottom:16px;
+  }
+  @media(min-width:860px){ .step{ margin-bottom:0; } }
+  .step .num{
+    font-family:'Space Grotesk',sans-serif; font-size:0.85rem; font-weight:700; color:var(--teal-glow);
+    direction:ltr; display:inline-block; margin-bottom:14px; letter-spacing:0.05em;
+  }
+  .step h3{ font-size:1.02rem; margin-bottom:8px; }
+  .step p{ color:var(--muted); font-size:0.92rem; }
+  .step-connector{ display:none; }
+  @media(min-width:860px){
+    .process-list{ position:relative; }
+  }
+
+  /* ---------- WHY ---------- */
+  .why-wrap{ display:grid; grid-template-columns:1fr; gap:40px; }
+  @media(min-width:960px){ .why-wrap{ grid-template-columns:0.9fr 1.1fr; } }
+  .why-card{
+    border-radius:var(--radius-tab); border:1px solid var(--line); background:var(--surface);
+    padding:34px;
+  }
+  .why-card h3{ font-size:1.2rem; margin-bottom:14px; }
+  .why-card p{ color:var(--muted); }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+  .skill-tags span{
+    padding:8px 14px; border-radius:10px; background:var(--surface-2); font-size:0.85rem;
+    color:var(--muted); border:1px solid var(--line);
+  }
+
+  /* ---------- PORTFOLIO ---------- */
+  .portfolio-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  @media(min-width:640px){ .portfolio-grid{ grid-template-columns:repeat(3,1fr); } }
+  @media(min-width:960px){ .portfolio-grid{ grid-template-columns:repeat(5,1fr); } }
+  .video-card{
+    position:relative; border-radius:20px; overflow:hidden; border:1px solid var(--line);
+    background:var(--surface); cursor:pointer; aspect-ratio:9/16;
+    transition:transform .2s, border-color .2s;
+  }
+  .video-card:hover{ transform:translateY(-4px); border-color:rgba(0,182,180,0.4); }
+  .video-card .thumb{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  }
+  .video-card .thumb-fallback{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(160deg, var(--surface-2), var(--void));
+  }
+  .video-card .thumb-fallback svg{ width:30%; height:30%; opacity:0.25; }
+  .video-card .overlay{
+    position:absolute; inset:0; background:linear-gradient(to top, rgba(10,0,14,0.85) 0%, rgba(10,0,14,0.1) 45%, transparent 70%);
+    display:flex; flex-direction:column; justify-content:space-between; padding:14px;
+  }
+  .video-card .play-btn{
+    align-self:center; margin:auto; width:52px; height:52px; border-radius:50%;
+    background:var(--grad-brand); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px -6px rgba(0,182,180,0.6); transition:transform .2s;
+  }
+  .video-card:hover .play-btn{ transform:scale(1.08); }
+  .video-card .play-btn svg{ width:20px; height:20px; color:#04201F; margin-inline-start:2px; }
+  .video-card .meta{ color:var(--white); }
+  .video-card .meta .v-title{ font-size:0.86rem; font-weight:700; }
+  .video-card .meta .v-client{ font-size:0.75rem; color:var(--muted); }
+
+  .video-card .inline-media{ position:absolute; inset:0; width:100%; height:100%; background:#000; }
+  .video-card .inline-media video, .video-card .inline-media iframe{ width:100%; height:100%; border:none; display:block; object-fit:cover; }
+  .video-card .inline-close{
+    position:absolute; top:10px; left:10px; z-index:2; width:28px; height:28px; border-radius:50%;
+    background:rgba(8,0,12,0.75); border:1px solid var(--line); color:var(--white);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem;
+  }
+
+  /* ---------- REVIEWS ---------- */
+  .reviews-grid{ display:grid; grid-template-columns:1fr; gap:18px; }
+  @media(min-width:720px){ .reviews-grid{ grid-template-columns:1fr 1fr; } }
+  @media(min-width:1080px){ .reviews-grid{ grid-template-columns:1fr 1fr 1fr; } }
+  .review-card{
+    border-radius:var(--radius-tab); border:1px solid var(--line); background:var(--surface);
+    padding:22px 22px 20px;
+  }
+  .review-card .review-head{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .review-card .avatar{
+    width:36px; height:36px; border-radius:50%; background:var(--grad-brand);
+    display:flex; align-items:center; justify-content:center; font-weight:800; color:#04201F; font-size:0.9rem; flex:none;
+  }
+  .review-card .who{ font-size:0.85rem; font-weight:700; color:var(--white); }
+  .review-card .via{ font-size:0.72rem; color:var(--muted-2); display:flex; align-items:center; gap:5px; }
+  .review-card .via svg{ width:12px; height:12px; color:#25D366; }
+  .bubble{
+    background:#EFE7DC; color:#2B2320; border-radius:14px 14px 4px 14px; padding:12px 16px;
+    font-size:0.92rem; display:inline-block; max-width:100%; margin-bottom:6px;
+  }
+  .bubble + .bubble{ border-radius:14px; }
+  .bubble .stamp{ display:block; font-size:0.68rem; color:#8a7f6f; margin-top:4px; text-align:left; direction:ltr; }
+
+  /* ---------- FORM ---------- */
+  .cta-band{
+    text-align:center; padding:70px 40px; border-radius:32px;
+    background:linear-gradient(135deg, rgba(0,182,180,0.14), rgba(60,239,224,0.05));
+    border:1px solid rgba(0,182,180,0.25); margin-bottom:60px;
+  }
+  .cta-band h2{ margin:0 auto 16px; }
+  .cta-band p{ color:var(--muted); max-width:560px; margin:0 auto 30px; }
+
+  .form-wrap{
+    max-width:640px; margin:0 auto; background:var(--surface); border:1px solid var(--line);
+    border-radius:var(--radius-tab); padding:44px 38px;
+  }
+  .form-wrap .form-head{ text-align:center; margin-bottom:30px; }
+  .form-wrap .form-head h3{ font-size:1.3rem; margin-bottom:8px; }
+  .form-wrap .form-head p{ color:var(--muted); font-size:0.92rem; }
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-size:0.9rem; font-weight:600; margin-bottom:9px; color:var(--white); }
+  .field input[type="text"], .field input[type="tel"], .field input[type="date"], .field input[type="time"]{
+    width:100%; padding:14px 16px; border-radius:12px; border:1px solid var(--line);
+    background:var(--void); color:var(--white); font-family:inherit; font-size:0.95rem;
+    outline:none; transition:border-color .2s;
+  }
+  .field input:focus{ border-color:var(--teal-bright); }
+  .radio-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .radio-opt{
+    display:flex; align-items:center; gap:8px; padding:12px 18px; border-radius:12px;
+    border:1px solid var(--line); background:var(--void); cursor:pointer; font-size:0.92rem;
+    flex:1; min-width:150px; justify-content:center; transition:border-color .2s, background .2s;
+  }
+  .radio-opt input{ accent-color:var(--teal-bright); }
+  .radio-opt.active{ border-color:var(--teal-bright); background:rgba(0,182,180,0.08); }
+  .row-2{ display:grid; grid-template-columns:1fr; gap:20px; }
+  @media(min-width:560px){ .row-2{ grid-template-columns:1fr 1fr; } }
+  #whatsappOtherWrap{ margin-top:14px; display:none; }
+  .submit-btn{ width:100%; padding:16px; font-size:1rem; border-radius:14px; margin-top:6px; }
+  .form-note{ text-align:center; color:var(--muted-2); font-size:0.82rem; margin-top:16px; }
+  .form-status{ text-align:center; margin-top:16px; font-size:0.92rem; font-weight:600; display:none; }
+  .form-status.ok{ color:var(--teal-glow); }
+  .form-status.err{ color:var(--danger); }
+
+  /* ---------- FOOTER ---------- */
+  footer{ border-top:1px solid var(--line); padding:44px 0; }
+  .footer-wrap{ display:flex; flex-direction:column; gap:18px; align-items:center; text-align:center; }
+  @media(min-width:720px){ .footer-wrap{ flex-direction:row; justify-content:space-between; text-align:right; } }
+  .footer-brand{ display:flex; align-items:center; gap:10px; }
+  .footer-brand svg{ width:26px; height:26px; }
+  footer p{ color:var(--muted-2); font-size:0.85rem; }
+
+  ::selection{ background:var(--teal-bright); color:#04201F; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header>
+  <nav>
+    <div class="brand">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gNav" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#0B3A52"/>
+            <stop offset="0.55" stop-color="#0C6E78"/>
+            <stop offset="1" stop-color="#3CEFE0"/>
+          </linearGradient>
+        </defs>
+        <path d="M62 12H50C29 12 12 29 12 50C12 71 29 88 50 88C58 88 65 85.5 70.5 81.2C73 79.3 74.5 76.3 74.5 73.1V54C74.5 50.7 71.8 48 68.5 48H50C46.7 48 44 50.7 44 54C44 57.3 46.7 60 50 60H56.5V68.5C54.6 69.8 52.4 70.5 50 70.5C38.7 70.5 29.5 61.3 29.5 50C29.5 38.7 38.7 29.5 50 29.5H62C65.9 29.5 69 26.4 69 22.5V19C69 15.1 65.9 12 62 12Z" fill="url(#gNav)"/>
+      </svg>
+      <span class="brand-name">GrowthEx</span>
+    </div>
+    <ul class="navlinks">
+      <li><a href="#problem">المشكلة</a></li>
+      <li><a href="#solution">الحل</a></li>
+      <li><a href="#services">خدماتنا</a></li>
+      <li><a href="#portfolio">شغلنا</a></li>
+      <li><a href="#reviews">آراء العملاء</a></li>
+      <li><a href="#process">كيفاش نخدمو</a></li>
+    </ul>
+    <a href="#book" class="btn btn-primary nav-cta">احجز مكالمة</a>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="hero-tag"><span class="dot"></span> لبراندات الـ e-commerce اللي حابة تبيع أكثر</div>
+      <h1>تصرف في برشا فلوس على <span style="color:var(--teal-bright);">Meta Ads</span>  ومفماش بيوع؟ المشكلة الرئيسية في الفيديو</h1>
+      <p class="lead">GrowthEx تكتبلك سكريبت يوقف السكرول، ونمونتجولك الفيديو بجودة تبيّن قيمة المنتوج الحقيقية. Strategy + The right creative = Sales.</p>
+      <div class="hero-ctas">
+        <a href="#book" class="btn btn-primary">احجز مكالمة مجانية</a>
+        <a href="#process" class="btn btn-ghost">شوف كيفاش نخدمو</a>
+      </div>
+      <div class="hero-stats">
+        <div><span class="num lat">Script + Edit</span><span class="lbl">كل شيء تحت سقف وحدة</span></div>
+        <div><span class="num lat">AR</span><span class="lbl">سكريبت وتعليق صوتي بالتونسي</span></div>
+        <div><span class="num lat">Revisions</span><span class="lbl">تعديلات لغاية الرضا</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="mark-plate">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gHero" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#0B3A52"/>
+              <stop offset="0.55" stop-color="#0C6E78"/>
+              <stop offset="1" stop-color="#3CEFE0"/>
+            </linearGradient>
+          </defs>
+          <path d="M62 12H50C29 12 12 29 12 50C12 71 29 88 50 88C58 88 65 85.5 70.5 81.2C73 79.3 74.5 76.3 74.5 73.1V54C74.5 50.7 71.8 48 68.5 48H50C46.7 48 44 50.7 44 54C44 57.3 46.7 60 50 60H56.5V68.5C54.6 69.8 52.4 70.5 50 70.5C38.7 70.5 29.5 61.3 29.5 50C29.5 38.7 38.7 29.5 50 29.5H62C65.9 29.5 69 26.4 69 22.5V19C69 15.1 65.9 12 62 12Z" fill="url(#gHero)"/>
+        </svg>
+      </div>
+      <div class="orbit-chip chip-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 8-16 8V4z"/></svg>
+        سكريبت يبيع
+      </div>
+      <div class="orbit-chip chip-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="M21 8l-4 3v2l4 3V8z"/></svg>
+        مونتاج احترافي
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section id="problem">
+  <div class="wrap">
+    <div class="eyebrow">المشكلة</div>
+    <h2>برشا براندات تصرف اليوم ملاين على فيديوات مخدومة بعشوائية ومتلقاش <span style="color:var(--teal-bright);" >Résultat</span> تراضيهم</h2>
+    <p class="lead">وحتى كي يخدموا فيديوات يركزوا على زوز و تلاثة فيديوات كهو.. مفماش تنويع, مفماش هوكات متنوعة, ومفماش مونتاج مختلف. كلوا مي بعضوا</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 001.7 3h15.2a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+        </div>
+        <div>
+          <h3>سكريبت ما فيهش hook</h3>
+          <p>الناس تسكيب بعد ثواني قليلة، والفيديو ما يوصلش للـ CTA.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 001.7 3h15.2a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+        </div>
+        <div>
+          <h3>مونتاج ما يعكسش قيمة المنتوج</h3>
+          <p>المنتوج قوي، أما الفيديو يبيّنو عادي وما يبيعش القيمة الحقيقية متاعو.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 001.7 3h15.2a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+        </div>
+        <div>
+          <h3>Ad spend كبير و ROAS ضعيف</h3>
+          <p>تصرف في الميديا باينق، أما الكرياتيف اللي توري ما تحوّلش لبيع.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 001.7 3h15.2a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+        </div>
+        <div>
+          <h3>ما عندكش وقت ولا فريق</h3>
+          <p>الفريق الداخلي مشغول، وإنتاج الكرياتيف يبيع بصفة مستمرة تعب وواقت.</p>
+        </div>
+      </div>
+    </div>
+    <div class="problem-note">المشكلة موش فيك ولا في المنتوج. المشكلة في الكرياتيف اللي ما تشدش الانتباه ولا تبيع.</div>
+  </div>
+</section>
+
+<!-- ============ SOLUTION ============ -->
+<section id="solution">
+  <div class="wrap">
+    <div class="eyebrow">الحل</div>
+    <h2>الحل انك تخدم وتنوع اكثر في creatives خاتر هي أساس التجارة الإلكترونية بكلها</h2>
+    <p class="lead">GrowthEx تجمع السكريبت والمونتاج في خدمة وحدة، مبنية على هدف براندك.</p>
+    <div class="equation">
+      <span class="pill lat">Strategy</span>
+      <span class="op">+</span>
+      <span class="pill lat">The right creative</span>
+      <span class="op">=</span>
+      <span class="result lat">Sales</span>
+    </div>
+    <div class="solution-wrap">
+      <div class="value-list">
+        <div class="value-item">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <p><strong>سكريبتات مبنية على Hooks</strong> — كل سكريبت يبدا بحاجة توقّف السكرول وتخلي المشاهد يكمل.</p>
+        </div>
+        <div class="value-item">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <p><strong>مونتاج ديناميكي</strong> — كل قصة وكل منتوج يبان بجودة عالية، مع ريتم يخلي المشاهد يحب يكمل.</p>
+        </div>
+        <div class="value-item">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <p><strong>تسليم سريع وتعديلات</strong> — نخدمو لغاية توصل للنتيجة اللي تحبها.</p>
+        </div>
+        <div class="value-item">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <p><strong>تنوع في الفيديوات</strong> — التركيز على صنع فيديوات اكثر لضمان نجاح الاعلان</p>
+        </div>
+      </div>
+      <div class="solution-visual">
+        <div class="bars">
+          <div class="bar" style="height:32%"></div>
+          <div class="bar" style="height:48%"></div>
+          <div class="bar" style="height:40%"></div>
+          <div class="bar hl" style="height:78%"></div>
+          <div class="bar hl" style="height:92%"></div>
+        </div>
+        <div class="caption">
+          <span>كرياتيف عادية</span>
+          <span class="lat" style="color:var(--teal-glow); font-weight:700;">Content that sells</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">خدماتنا</div>
+    <h2>كل شيء يلزمك باش الكرياتيف متاعك تبيع</h2>
+    <p class="lead">من الفكرة للفيديو النهائي، كل مرحلة مدروسة.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#04201F" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M6 4h9l5 5v11H6z"/><path d="M15 4v5h5"/><path d="M9 13h6M9 17h6"/></svg></div>
+        <h3>كتابة السكريبت</h3>
+        <p>سكريبتات UGC وAds مبنية على hooks، مصممة باش توقف السكرول وتوصل للـ CTA.</p>
+      </div>
+      <div class="service-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#04201F" stroke-width="2"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M21 9l-5 3 5 3V9z"/></svg></div>
+        <h3>مونتاج احترافي</h3>
+        <p>مونتاج لـ Reels، TikTok وAds بريتم وجودة يخلو المنتوج يبان بقيمة أكبر.</p>
+      </div>
+      <div class="service-card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#04201F" stroke-width="2"><path d="M12 3a3 3 0 00-3 3v6a3 3 0 006 0V6a3 3 0 00-3-3z"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></div>
+        <h3>تعليق صوتي</h3>
+        <p>Voiceover بالعربي ، صوت واضح ونبرة تناسب البراند متاعك.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PORTFOLIO ============ -->
+<section id="portfolio">
+  <div class="wrap">
+    <div class="eyebrow">خدمتنا</div>
+    <h2>شوف الكرياتيف اللي صنعناها</h2>
+    <p class="lead">مجموعة من الفيديوهات اللي خدمناها لبراندات e-commerce — سكريبت، مونتاج وريتم مدروس باش يبيع.</p>
+    <div class="portfolio-grid" id="portfolioGrid"></div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="https://drive.google.com/drive/folders/1v9Mrhey1d9Uwr8Kg_JHLJCEQB1bmrq--?usp=sharing" class="btn btn-primary nav-cta">UGC Videos</a> &nbsp;
+      <a href="https://drive.google.com/drive/folders/1n1Mb_p4OVpKKy4qp_pngi7I4GBTWjIqC" class="btn btn-primary nav-cta">E-commerce pro videos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="eyebrow">آراء العملاء</div>
+    <h2>عملاؤنا يحكيو أحسن مناّ</h2>
+    <p class="lead">رسائل حقيقية وصلتنا من عملاء خدمنا معاهم على الواتساب.</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-head">
+          <div class="avatar">ع</div>
+          <div>
+            <div class="who">عميل GrowthEx</div>
+            <div class="via">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.3L2 22l4.9-1.3A10 10 0 1012 2z"/></svg>
+              واتساب
+            </div>
+          </div>
+        </div>
+        <span class="bubble">ok kouya el gali <span class="stamp">16:31</span></span><br>
+        <span class="bubble">mezyan <span class="stamp">16:32</span></span><br>
+        <span class="bubble">el video haja top 🥰 <span class="stamp">16:32</span></span>
+      </div>
+      <div class="review-card">
+        <div class="review-head">
+          <div class="avatar">ع</div>
+          <div>
+            <div class="who">عميل GrowthEx</div>
+            <div class="via">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.3L2 22l4.9-1.3A10 10 0 1012 2z"/></svg>
+              واتساب
+            </div>
+          </div>
+        </div>
+        <span class="bubble">Ey walah machalah alik 🙏 <span class="stamp">20:18</span></span><br>
+        <span class="bubble">Très satisfaite ❤️ <span class="stamp">20:18</span></span>
+      </div>
+      <div class="review-card">
+        <div class="review-head">
+          <div class="avatar">ع</div>
+          <div>
+            <div class="who">عميل GrowthEx</div>
+            <div class="via">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.3L2 22l4.9-1.3A10 10 0 1012 2z"/></svg>
+              واتساب
+            </div>
+          </div>
+        </div>
+        <span class="bubble">روعة 💪 <span class="stamp">20:55</span></span><br>
+        <span class="bubble">برافو والله <span class="stamp">20:55</span></span>
+      </div>
+      <div class="review-card">
+        <div class="review-head">
+          <div class="avatar">ع</div>
+          <div>
+            <div class="who">عميل GrowthEx</div>
+            <div class="via">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.3L2 22l4.9-1.3A10 10 0 1012 2z"/></svg>
+              واتساب
+            </div>
+          </div>
+        </div>
+        <span class="bubble">I like your job brother ❤️<span class="stamp">17:47</span></span>
+      </div>
+      <div class="review-card">
+        <div class="review-head">
+          <div class="avatar">ع</div>
+          <div>
+            <div class="who">عميل GrowthEx</div>
+            <div class="via">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.3L2 22l4.9-1.3A10 10 0 1012 2z"/></svg>
+              واتساب
+            </div>
+          </div>
+        </div>
+        <span class="bubble">M3allim Saahbi ❤️<span class="stamp">13:04</span></span><br>
+      </div>
+      <div class="review-card">
+        <div class="review-head">
+          <div class="avatar">ع</div>
+          <div>
+            <div class="who">عميل GrowthEx</div>
+            <div class="via">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.3L2 22l4.9-1.3A10 10 0 1012 2z"/></svg>
+              واتساب
+            </div>
+          </div>
+        </div>
+        <span class="bubble">Zeyed m3ak bro 🙏 <span class="stamp">12:35</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section id="process">
+  <div class="wrap">
+    <div class="eyebrow">كيفاش نخدمو</div>
+    <h2>من أول مكالمة لأول فيديو يبيع... الطريق واضحة</h2>
+    <div class="process-list">
+      <div class="step">
+        <span class="num lat">01</span>
+        <h3>مكالمة تعارف</h3>
+        <p>نفهمو براندك، المنتوج والهدف من الكرياتيف.</p>
+      </div>
+      <div class="step">
+        <span class="num lat">02</span>
+        <h3>كتابة السكريبت</h3>
+        <p>نحضرولك سكريبت مبني على الهدف والجمهور المستهدف.</p>
+      </div>
+      <div class="step">
+        <span class="num lat">03</span>
+        <h3>المونتاج</h3>
+        <p>نمونتجو الفيديو بجودة احترافية وريتم يخلي المشاهد يكمل.</p>
+      </div>
+      <div class="step">
+        <span class="num lat">04</span>
+        <h3>التسليم والتعديل</h3>
+        <p>نسلمولك الكرياتيف في وقت قياسي، وتنجم تطلب تعديلات لغاية الرضا الكامل.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section id="why">
+  <div class="wrap why-wrap">
+    <div class="why-card">
+      <h3>علاش GrowthEx؟</h3>
+      <p>ما نخدموش على فيديوهات "تبان مزيانة" وأكهو. كل سكريبت وكل مونتاج عندو هدف واحد: يخلي الكرياتيف تولي أداة مبيعات حقيقية للبراند متاعك.</p>
+      <div class="skill-tags">
+        <span class="lat">Scripting</span>
+        <span class="lat">Video Editing</span>
+        <span class="lat">AR Voiceover</span>
+      </div>
+    </div>
+    <div class="why-card">
+      <h3>لشكون GrowthEx؟</h3>
+      <p>لبراندات وشركات الـ e-commerce اللي تبيع Online وتحب الكرياتيف متاعها تولي جزء من الـ funnel، موش برك ديكور على الصفحة. سواء كنت تبدا من الصفر ولا عندك كرياتيف وتحب تحسّنها، نخدمو معاك على حساب هدفك.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA / FORM ============ -->
+<section id="book">
+  <div class="wrap">
+    <div class="cta-band">
+      <div class="eyebrow" style="justify-content:center;">باش نبداو</div>
+      <h2 style="margin-inline:auto;">احجز مكالمتك المجانية اليوم</h2>
+      <p>عبّي المعلومات تحت، ونتصلو بيك باش نحكيو على براندك والهدف من الكرياتيف.</p>
+    </div>
+
+    <div class="form-wrap">
+      <div class="form-head">
+        <h3>خلينا نتعرفو على براندك</h3>
+        <p>نحتاجو برك شوية معلومات باش نتنظمو المكالمة.</p>
+      </div>
+
+      <form id="bookingForm">
+        <div class="field">
+          <label for="fullName">الاسم الكامل</label>
+          <input type="text" id="fullName" name="fullName" placeholder="مثال: فلان الفولاني" required>
+        </div>
+
+        <div class="field">
+          <label for="phone">رقم الهاتف</label>
+          <input type="tel" id="phone" name="phone" placeholder="مثال: 20 123 456" required>
+        </div>
+
+        <div class="field">
+          <label>رقم الواتساب</label>
+          <div class="radio-row">
+            <label class="radio-opt active" id="optSame">
+              <input type="radio" name="whatsappChoice" value="same" checked>
+              نفس رقم الهاتف
+            </label>
+            <label class="radio-opt" id="optOther">
+              <input type="radio" name="whatsappChoice" value="other">
+              رقم آخر
+            </label>
+          </div>
+          <div id="whatsappOtherWrap">
+            <input type="tel" id="whatsappOther" name="whatsappOther" placeholder="رقم الواتساب">
+          </div>
+        </div>
+
+        <div class="row-2">
+          <div class="field">
+            <label for="availDate">(النهار) وقتاش تكون متوفر</label>
+            <input type="date" id="availDate" name="availDate" required>
+          </div>
+          <div class="field">
+            <label for="availTime">الوقت</label>
+            <input type="time" id="availTime" name="availTime" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">احجز مكالمتك</button>
+        <div class="form-status" id="formStatus"></div>
+        <p class="form-note">معلوماتك تنستعمل برك باش نتواصلو معاك بخصوص الخدمة.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap footer-wrap">
+    <div class="footer-brand">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M62 12H50C29 12 12 29 12 50C12 71 29 88 50 88C58 88 65 85.5 70.5 81.2C73 79.3 74.5 76.3 74.5 73.1V54C74.5 50.7 71.8 48 68.5 48H50C46.7 48 44 50.7 44 54C44 57.3 46.7 60 50 60H56.5V68.5C54.6 69.8 52.4 70.5 50 70.5C38.7 70.5 29.5 61.3 29.5 50C29.5 38.7 38.7 29.5 50 29.5H62C65.9 29.5 69 26.4 69 22.5V19C69 15.1 65.9 12 62 12Z" fill="url(#gNav)"/>
+      </svg>
+      <span class="brand-name lat">GrowthEx</span>
+    </div>
+    <p class="lat">Strategy + The right creative = Sales</p>
+    <p class="lat">كلمنا على الرقم<span class="num lat"> 56 224 641</span> </p>
+    <p>© 2026 GrowthEx. جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<script>
+  // ---- Portfolio videos ----
+  // Edit this list with your real work. For each video, choose ONE of:
+  //   type: "mp4"     -> src: path/URL to an .mp4 file, thumb: path/URL to a poster image
+  //   type: "youtube" -> src: the YouTube embed URL (https://www.youtube.com/embed/VIDEO_ID)
+  //   type: "instagram" -> src: the Reel URL, embedded via Instagram's embed iframe
+  // thumb is optional — if left empty, a placeholder icon is shown instead.
+  const portfolioVideos = [
+    { title: "سبوت إشهاري — ark drop", client: "براند e-commerce", type: "mp4", src: "https://res.cloudinary.com/hztvlnrf/video/upload/v1785774848/ark_drops_1_msjgoj.mp4", thumb: "Screenshot 2026-08-01 130435.png" },
+    { title: "Aspirateur", client: "براند e-commerce", type: "mp4", src: "https://res.cloudinary.com/hztvlnrf/video/upload/v1785774826/aspirateur_gkgl73.mp4", thumb: "Screenshot 2026-08-01 130457.png" },
+    { title: "سور حديقة صغيرة", client: "براند e-commerce", type: "mp4", src: "https://res.cloudinary.com/hztvlnrf/video/upload/v1785774791/jardin_ymliep.mp4", thumb: "Screenshot 2026-08-01 130531.png" },
+    { title: "Skin Care", client: "براند e-commerce", type: "mp4", src: "https://res.cloudinary.com/hztvlnrf/video/upload/v1785774787/peau_2_vfh7wq.mp4", thumb: "Screenshot 2026-08-01 130602.png" },
+    { title: "parfum", client: "براند e-commerce", type: "mp4", src: "https://res.cloudinary.com/hztvlnrf/video/upload/v1785774836/parfun_r1ovv4.mp4", thumb: "Screenshot 2026-08-02 121846.png" },
+
+    
+    //{ title: "Ad Creative — Home & Living", client: "براند e-commerce", type: "mp4", src: "PROJET 2.mp4", thumb: "" }
+  ];
+
+  const portfolioGrid = document.getElementById('portfolioGrid');
+  const playIconSvg = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+  const placeholderSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 3v3M16 3v3M3 11h18"/></svg>`;
+
+  function renderThumb(card, v){
+    card.innerHTML = `
+      ${v.thumb ? `<img class="thumb" src="${v.thumb}" alt="${v.title}" loading="lazy">` : `<div class="thumb-fallback">${placeholderSvg}</div>`}
+      <div class="overlay">
+        <div></div>
+        <div class="play-btn">${playIconSvg}</div>
+        <div class="meta">
+          <div class="v-title">${v.title}</div>
+          <div class="v-client">${v.client}</div>
+        </div>
+      </div>
+    `;
+    card.onclick = () => playInline(card, v);
+  }
+
+  function playInline(card, v){
+    let mediaEl = '';
+    if(v.type === 'youtube'){
+      mediaEl = `<iframe src="${v.src}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    } else if(v.type === 'instagram'){
+      mediaEl = `<iframe src="${v.src}embed" allowfullscreen></iframe>`;
+    } else {
+      mediaEl = `<video src="${v.src}" controls autoplay playsinline></video>`;
+    }
+    card.innerHTML = `<div class="inline-close">&times;</div><div class="inline-media">${mediaEl}</div>`;
+    card.onclick = null;
+    card.querySelector('.inline-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      renderThumb(card, v);
+    });
+  }
+
+  portfolioVideos.forEach((v) => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    renderThumb(card, v);
+    portfolioGrid.appendChild(card);
+  });
+
+  // WhatsApp same/other toggle
+  const optSame = document.getElementById('optSame');
+  const optOther = document.getElementById('optOther');
+  const whatsappOtherWrap = document.getElementById('whatsappOtherWrap');
+  const whatsappOtherInput = document.getElementById('whatsappOther');
+
+  function updateWhatsappToggle(){
+    const isOther = document.querySelector('input[name="whatsappChoice"]:checked').value === 'other';
+    whatsappOtherWrap.style.display = isOther ? 'block' : 'none';
+    whatsappOtherInput.required = isOther;
+    optSame.classList.toggle('active', !isOther);
+    optOther.classList.toggle('active', isOther);
+  }
+  document.querySelectorAll('input[name="whatsappChoice"]').forEach(r => r.addEventListener('change', updateWhatsappToggle));
+  updateWhatsappToggle();
+
+  // ---- Google Sheets submission ----
+  // 1) Deploy the attached Google Apps Script as a Web App (see setup instructions).
+  // 2) Paste the Web App URL below.
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwt4fHvBs_vsSnPF58QJnoHubnTlUkQ4lOwdbbCOR9y8p4AYIlNqZA4aPtF_jgZKzK5/exec";
+
+  const form = document.getElementById('bookingForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    const whatsappChoice = document.querySelector('input[name="whatsappChoice"]:checked').value;
+    const fullName = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const whatsapp = whatsappChoice === 'same' ? phone : whatsappOtherInput.value.trim();
+    const availDate = document.getElementById('availDate').value;
+    const availTime = document.getElementById('availTime').value;
+
+    if(!fullName || !phone || (whatsappChoice === 'other' && !whatsapp) || !availDate || !availTime){
+      formStatus.textContent = "عمر باقي الخانات باش تنجم تحجز.";
+      formStatus.className = "form-status err";
+      formStatus.style.display = "block";
+      return;
+    }
+
+    const payload = {
+      fullName, phone, whatsapp,
+      whatsappSameAsPhone: whatsappChoice === 'same' ? 'نعم' : 'لا',
+      availDate, availTime,
+      submittedAt: new Date().toISOString()
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "قاعدة تتسجل...";
+
+    if(GOOGLE_SCRIPT_URL.includes("PASTE_YOUR")){
+      // Script URL not configured yet — show a friendly message instead of failing silently.
+      formStatus.textContent = "الفورم لينحتاج ربط بـ Google Sheets باش يخدم (شوف تعليمات الإعداد).";
+      formStatus.className = "form-status err";
+      formStatus.style.display = "block";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "احجز مكالمتك";
+      return;
+    }
+
+    try{
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      formStatus.textContent = "تم! وصلتنا معلوماتك، تو نتصلو بيك على الوقت اللي حددتو.";
+      formStatus.className = "form-status ok";
+      formStatus.style.display = "block";
+      form.reset();
+      updateWhatsappToggle();
+    }catch(err){
+      formStatus.textContent = "صار مشكل في الإرسال. حاول مرة أخرى ولا تواصل معانا مباشرة.";
+      formStatus.className = "form-status err";
+      formStatus.style.display = "block";
+    }finally{
+      submitBtn.disabled = false;
+      submitBtn.textContent = "احجز مكالمتك";
+    }
+  });
+</script>
+</body>
+</html>
